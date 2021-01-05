@@ -1,12 +1,12 @@
 package org.acme.geometry;
 
 public class Point implements Geometry{
+	
 	private Coordinate coordinate;
-	public static final String TYPE = "Point";
-
+	public static final String TYPE = "POINT";
 
 	public Point() {
-		this.setCoordinate(new Coordinate());
+		this.coordinate = new Coordinate();
 	}
 	
 	public Point(Coordinate coordinate) {
@@ -14,18 +14,15 @@ public class Point implements Geometry{
 	}
 	@Override
 	public String getType() {
-		return "I'm a Point !";
+		return TYPE;
 	}
 	
 	@Override
-    public boolean isEmpty() {
-        if ( Double.isNaN(this.getCoordinate().getX()) || Double.isNaN(this.getCoordinate().getY())) {
-            return true;
-        }
-        else return false;
-    }
-
-
+	public Enveloppe getEnveloppe() {
+		return new Enveloppe(this.getCoordinate(), this.getCoordinate());
+		
+	}
+	
 	public Coordinate getCoordinate() {
 		return coordinate;
 	}
@@ -41,5 +38,17 @@ public class Point implements Geometry{
 				this.coordinate.getY() + dy);
 		
 	}
-
+	
+	public boolean isEmpty() {
+		if(Double.isNaN(this.getCoordinate().getX()) || Double.isNaN(this.getCoordinate().getY())){
+			return true;
+		}
+		else {
+			return false; 
+		}
+	}
+	@Override
+	public Point clone() {
+		return new Point(coordinate);
+	}
 }
