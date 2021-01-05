@@ -2,7 +2,7 @@ package org.acme.geometry;
 
 import java.util.ArrayList;
 
-public class EnveloppeBuilder {
+public class EnveloppeBuilder implements GeometryVisitor{
 	
 	private ArrayList<Point> listPoints;
 	
@@ -39,7 +39,21 @@ public class EnveloppeBuilder {
 		}
 
 	}
+	
+	@Override
+	public void visit(Point point) {
+		insert(point.getCoordinate());
+	}
+	
 
+	@Override
+	public void visit(LineString lineString) {
+		for(int i = 0; i < lineString.getNumPoints(); i++) {
+			visit(lineString.getPointN(i));
+			
+		}
+	}
+	
 	public ArrayList<Point> getListPoints() {
 		return listPoints;
 	}
@@ -47,6 +61,7 @@ public class EnveloppeBuilder {
 	public void setListPoints(ArrayList<Point> listPoints) {
 		this.listPoints = listPoints;
 	}
+
 	
 
 }

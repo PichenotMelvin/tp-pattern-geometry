@@ -6,5 +6,6 @@ public interface Geometry {
 	abstract void translate(double dx, double dy);
 	abstract Geometry clone();
 	abstract Enveloppe getEnveloppe();
-	abstract accept(GeometryVisitor visitor);
+	abstract void accept(GeometryVisitor visitor);
+	abstract void addLister(GeometryListener listener);
 }

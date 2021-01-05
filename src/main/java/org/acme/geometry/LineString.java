@@ -2,7 +2,7 @@ package org.acme.geometry;
 
 import java.util.ArrayList;
 
-public class LineString implements Geometry{
+public class LineString extends AbstractGeometry{
 	
 	private ArrayList<Point> listPoints;
 	public static final String TYPE = "LINESTRING";
@@ -42,7 +42,7 @@ public class LineString implements Geometry{
 	}
 	
 	public int getNumPoints(){
-		return listPoints.size();
+		return listPoints.size();		
 	}
 	
 	public Point getPointN(int n) {
@@ -57,11 +57,11 @@ public class LineString implements Geometry{
 
 	@Override
 	public void translate(double dx, double dy) {
-        // TODO Auto-generated method stub
         ArrayList<Point> l = this.listPoints;
         for (int i = 0; i < l.size(); i++) {
             l.get(i).translate(dx,dy);
-        }		
+        }	
+        triggerChange();
 	}
 	
 	@Override
@@ -81,6 +81,19 @@ public class LineString implements Geometry{
 			envBuilder.insert(pt.getCoordinate());
 		}
 		return envBuilder.build();
+		
+	}
+
+	
+	@Override
+	public void accept(GeometryVisitor visitor) {
+		visitor.visit(this);
+	}
+	
+
+	@Override
+	public void addLister(GeometryListener listener) {
+		// TODO Auto-generated method stub
 		
 	}
 
